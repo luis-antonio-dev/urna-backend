@@ -1,0 +1,11 @@
+GET http://localhost:3333/votes
+content-type: application/json
+
+### 
+
+POST http://localhost:3333/votes
+content-type: application/json
+
+{
+  "vote": 17
+}

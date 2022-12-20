@@ -1,23 +1,18 @@
-import fs from "fs";
-import path from "path";
-import storage from "../database/storage.json";
+import table from "../database/connection";
 
 export class VotesModel {
-  index() {
-    return storage;
+  async index() {
+    const data = await table("votes")
+      .select("vote")
+      .groupBy("vote")
+      .count("vote");
+
+    return data;
   }
 
-  create(voteNumber: string | number) {
-    if (voteNumber in storage) {
-      storage[voteNumber] = storage[voteNumber] + 1;
-    } else {
-      storage[voteNumber] = 1;
-    }
-
-    fs.writeFileSync(
-      path.resolve(__dirname, "..", "database", "storage.json"),
-      JSON.stringify(storage),
-      "utf8"
-    );
+  async create(voteNumber: string | number) {
+    return await table("votes").insert({
+      vote: voteNumber,
+    });
   }
 }

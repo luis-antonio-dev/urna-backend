@@ -5,7 +5,7 @@ export class VotesController {
   async index(_: Request, response: Response) {
     const votesModel = new VotesModel();
 
-    return response.json(votesModel.index());
+    return response.json(await votesModel.index());
   }
 
   async create(request: Request, response: Response) {
